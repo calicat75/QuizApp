@@ -13,7 +13,7 @@ class GetQuestionsUseCase @Inject constructor(
     private val quizRepository: QuizRepository
 ) {
     operator fun invoke(): Flow<Resource<List<Question>>> = flow {
-        emit(com.example.dailyquiz.data.common.Resource.Loading())
+        emit(Resource.Loading)
         try {
             val questions = quizRepository.getQuestions()
             emit(Resource.Success(questions))

@@ -11,7 +11,11 @@ import androidx.navigation.NavHostController
 import com.example.dailyquiz.ui.viewmodel.QuizViewModel
 
 @Composable
-fun QuizView(navController: NavHostController, viewModel: QuizViewModel, modifier: Modifier = Modifier) {
+fun QuizView(
+    viewModel: QuizViewModel,
+    modifier: Modifier = Modifier,
+    navController: NavHostController
+) {
     val state by viewModel.uiState.collectAsState()
 
     Box(modifier = modifier.fillMaxSize()) {

@@ -8,13 +8,15 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.dailyquiz.ui.viewmodel.HistoryViewModel
-import java.time.format.DateTimeFormatter
+import java.text.SimpleDateFormat
+import java.util.*
 
 @Composable
 fun HistoryView(
@@ -23,7 +25,9 @@ fun HistoryView(
     navController: NavHostController
 ) {
     val historyList = historyViewModel.historyItems.collectAsState()
-    val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")
+    val formatter = remember {
+        SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
+    }
 
     LaunchedEffect(Unit) {
         historyViewModel.loadHistory()
@@ -49,7 +53,7 @@ fun HistoryView(
                     Column(
                         modifier = Modifier.padding(16.dp)
                     ) {
-                        Text("Попытка от: ${item.timestamp.format(formatter)}")
+                        Text("Попытка от: ${formatter.format(Date(item.timestamp))}")
                         Text("Результат: ${item.correctAnswers} из 5")
                         item.category?.let {
                             Text("Категория: $it")

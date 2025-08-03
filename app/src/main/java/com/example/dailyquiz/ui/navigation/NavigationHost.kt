@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.dailyquiz.ui.view.quiz.QuizView
 import com.example.dailyquiz.ui.view.history.HistoryView
+import com.example.dailyquiz.ui.view.quiz.FirstScreen
 import com.example.dailyquiz.ui.view.review.ReviewView
 import com.example.dailyquiz.ui.viewmodel.HistoryViewModel
 import com.example.dailyquiz.ui.viewmodel.QuizViewModel
@@ -23,12 +24,22 @@ fun NavigationHost(navController: NavHostController, modifier: Modifier = Modifi
         startDestination = Screen.Quiz.route,
         modifier = modifier
     ) {
+        composable(Screen.First.route) {
+            FirstScreen(
+                navController = navController,
+                quizCategory = "General Knowledge", // заглушки или передавай через аргументы
+                quizDifficulty = "Easy",
+                quizType = "Multiple Choice",
+                viewModel = quizViewModel
+            )
+        }
+
         composable(Screen.Quiz.route) {
             QuizView(navController = navController, viewModel = quizViewModel)
         }
 
         composable(Screen.History.route) {
-            HistoryView(navController = navController, viewModel = historyViewModel)
+            HistoryView(navController = navController, historyViewModel = historyViewModel)
         }
 
         composable("${Screen.Review.route}/{sessionId}") { backStackEntry ->

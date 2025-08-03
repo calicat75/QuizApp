@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.dailyquiz.domain.model.Question
 import com.example.dailyquiz.domain.model.QuizResult
 import com.example.dailyquiz.domain.repository.QuizRepository
-import com.example.dailyquiz.ui.viewmodel.QuizUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
