@@ -12,10 +12,11 @@ import javax.inject.Inject
 class GetQuestionsUseCase @Inject constructor(
     private val quizRepository: QuizRepository
 ) {
-    operator fun invoke(): Flow<Resource<List<Question>>> = flow {
+    operator fun invoke(category: String, difficulty: String, type: String):
+            Flow<Resource<List<Question>>> = flow {
         emit(Resource.Loading)
         try {
-            val questions = quizRepository.getQuestions()
+            val questions = quizRepository.getQuestions(category, difficulty, type)
             emit(Resource.Success(questions))
         } catch (e: Exception) {
             emit(Resource.Error(e.message ?: "Unknown error"))

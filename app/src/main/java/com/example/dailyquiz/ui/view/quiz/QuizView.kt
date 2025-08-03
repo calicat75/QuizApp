@@ -6,6 +6,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.dailyquiz.ui.viewmodel.QuizViewModel
@@ -24,9 +25,13 @@ fun QuizView(
             is QuizUiState.Loading -> CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
             is QuizUiState.QuestionState -> QuestionView(viewModel, state)
             is QuizUiState.Result -> ResultView(viewModel, state)
+            is QuizUiState.Error -> Text(
+                text = state.message,
+                color = Color.Red,
+                modifier = Modifier.align(Alignment.Center)
+            )
         }
-    }
-}
+}}
 
 @Composable
 fun StartQuizView(viewModel: QuizViewModel) {
@@ -37,7 +42,7 @@ fun StartQuizView(viewModel: QuizViewModel) {
     ) {
         Text("Добро пожаловать в DailyQuiz!", style = MaterialTheme.typography.headlineMedium)
         Spacer(modifier = Modifier.height(24.dp))
-        Button(onClick = { viewModel.startQuiz() }) {
+        Button(onClick = { viewModel.startQuiz(category = "someCategory", difficulty = "easy", type = "multiple") }) {
             Text("Начать викторину")
         }
     }

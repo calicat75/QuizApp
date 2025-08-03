@@ -23,14 +23,22 @@ class QuizViewModel @Inject constructor(
     private var questions: List<Question> = emptyList()
     private val selectedAnswers = mutableListOf<Int?>()
 
-    fun startQuiz() {
+    fun startQuiz(category: String, difficulty: String, type: String) {
         _uiState.value = QuizUiState.Loading
         viewModelScope.launch {
-            questions = quizRepository.getQuestions()
-            selectedAnswers.clear()
-            selectedAnswers.addAll(List(questions.size) { null })
-            currentIndex = 0
-            showCurrentQuestion()
+            try {
+                questions = quizRepository.getQuestions(category, difficulty, type)
+                if (questions.isEmpty()) {
+                    _uiState.value = QuizUiState.Error("Вопросы не найдены")
+                } else {
+                    selectedAnswers.clear()
+                    selectedAnswers.addAll(List(questions.size) { null })
+                    currentIndex = 0
+                    showCurrentQuestion()
+                }
+            } catch (e: Exception) {
+                _uiState.value = QuizUiState.Error(e.message ?: "Ошибка загрузки")
+            }
         }
     }
 

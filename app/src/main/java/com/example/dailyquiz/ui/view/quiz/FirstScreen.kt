@@ -37,7 +37,11 @@ fun FirstScreen(
 
     // Запускаем викторину при первом входе
     LaunchedEffect(Unit) {
-        viewModel.startQuiz()
+        viewModel.startQuiz(
+            category = quizCategory,
+            difficulty = quizDifficulty,
+            type = quizType
+        )
     }
 
     when (uiState) {
@@ -102,6 +106,9 @@ fun FirstScreen(
                     Text("На главный экран")
                 }
             }
+        }
+        is QuizUiState.Error -> {
+            Text("Ошибка: ${(uiState as QuizUiState.Error).message}")
         }
     }
 }

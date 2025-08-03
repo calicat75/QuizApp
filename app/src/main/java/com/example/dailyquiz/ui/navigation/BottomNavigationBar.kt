@@ -19,14 +19,20 @@ import androidx.navigation.compose.rememberNavController
 @Composable
 fun BottomNavigationBar(navController: NavController = rememberNavController()) {
 
+    val items = listOf(
+        Screen.Selection,
+        Screen.Quiz,
+        Screen.History
+    )
+
     NavigationBar(
         modifier = Modifier.height(56.dp),
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
 
-        Screen.entries.forEach { screen ->
-            val isSelected = currentRoute == screen.route
+        items.forEach { screen ->
+            val isSelected = currentRoute?.startsWith(screen.route.substringBefore("/{")) == true
 
             NavigationBarItem(
                 icon = {

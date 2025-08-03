@@ -14,4 +14,6 @@ sealed class QuizUiState {
         val total: Int,
         val questions: List<Question>
     ) : QuizUiState()
+    data class Error(val message: String) : QuizUiState()
 }
+
